@@ -8,7 +8,7 @@
 <style>
 * {
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Segoe UI", system-ui, sans-serif;
 }
 
 body {
@@ -17,14 +17,16 @@ body {
   overflow-x: hidden;
 }
 
-/* Fireplace background */
-video {
+/* ===== Background Image ===== */
+.bg-image {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  inset: 0;
+  background-image: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(2px);
+  transform: scale(1.05);
   z-index: -2;
 }
 
@@ -32,24 +34,27 @@ video {
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.65);
+  background: rgba(0, 0, 0, 0.7);
   z-index: -1;
 }
 
-/* Snow */
+/* ===== Snow ===== */
 .snowflake {
   position: fixed;
   top: -10px;
   color: white;
   font-size: 14px;
   animation: fall linear infinite;
+  user-select: none;
 }
 
 @keyframes fall {
-  to { transform: translateY(110vh); }
+  to {
+    transform: translateY(110vh);
+  }
 }
 
-/* Landing */
+/* ===== Landing Screen ===== */
 #landing {
   height: 100vh;
   display: flex;
@@ -63,16 +68,16 @@ video {
   border-radius: 30px;
   border: none;
   background: #1abc9c;
-  color: black;
+  color: #000;
   cursor: pointer;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
 }
 
 #open:hover {
   transform: scale(1.08);
 }
 
-/* Gift */
+/* ===== Gift Content ===== */
 #gift {
   display: none;
   max-width: 760px;
@@ -82,7 +87,8 @@ video {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.6rem;
+  margin-bottom: 5px;
 }
 
 h2 {
@@ -91,20 +97,29 @@ h2 {
   margin-bottom: 30px;
 }
 
+/* Message Cards */
 .message {
-  background: rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.15);
   padding: 22px;
   margin: 22px 0;
   border-radius: 14px;
-  animation: fadeIn 0.8s ease forwards;
+  animation: fadeIn 0.9s ease forwards;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Music button */
+/* ===== Music Button ===== */
 #music {
   position: fixed;
   top: 15px;
@@ -116,6 +131,7 @@ h2 {
   padding: 10px 14px;
   border-radius: 50%;
   cursor: pointer;
+  z-index: 10;
 }
 
 footer {
@@ -128,10 +144,7 @@ footer {
 
 <body>
 
-<!-- Fireplace video -->
-<video autoplay muted loop playsinline>
-  <source src="https://cdn.coverr.co/videos/coverr-burning-fireplace-9716/1080p.mp4" type="video/mp4">
-</video>
+<div class="bg-image"></div>
 <div class="overlay"></div>
 
 <!-- Landing -->
@@ -151,49 +164,51 @@ footer {
   <h2>Just a small thing, bro</h2>
 
   <div class="message">
-    If you’re reading this, congrats — you officially unlocked this random Christmas gift.  
+    If you’re reading this, congrats — you officially unlocked this random Christmas gift.
     No deep reason, just thought I’d do something different this year.
   </div>
 
   <div class="message">
-    Even though we’re in different parts of the world and you’re holding it down in Canada,  
+    Even though we’re in different parts of the world and you’re holding it down in Canada,
     some connections don’t really care about distance.
   </div>
 
   <div class="message">
-    You’re not just someone I talk to occasionally — you’re someone I genuinely respect  
+    You’re not just someone I talk to occasionally — you’re someone I genuinely respect
     and consider a real friend.
   </div>
 
   <div class="message">
-    I appreciate the conversations, the laughs, and the fact that things stayed solid  
+    I appreciate the conversations, the laughs, and the fact that things stayed solid
     without needing to force anything.
   </div>
 
   <div class="message">
-    Hope this Christmas brings you good vibes, peace of mind, and momentum for whatever  
+    Hope this Christmas brings you good vibes, peace of mind, and momentum for whatever
     you’re chasing next. Stay winning, bro 🤝
   </div>
 
   <footer>
-    — From your guy
+    — Respect always
   </footer>
 
 </div>
 
 <script>
+/* Open gift */
 const openBtn = document.getElementById("open");
 const landing = document.getElementById("landing");
 const gift = document.getElementById("gift");
-
-const musicBtn = document.getElementById("music");
-const song = document.getElementById("song");
-let playing = false;
 
 openBtn.onclick = () => {
   landing.style.display = "none";
   gift.style.display = "block";
 };
+
+/* Music */
+const musicBtn = document.getElementById("music");
+const song = document.getElementById("song");
+let playing = false;
 
 musicBtn.onclick = () => {
   if (!playing) {
